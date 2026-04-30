@@ -9,9 +9,8 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./docker-entrypoint-init.db:/docker-entrypoint-initdb.d
-      - ./ships:/data/ships:ro
-      - ./computer_firm:/data/computer_firm:ro
+      - ./docker-entrypoint-init.db:/docker-entrypoint-initdb.d:ro
+      - ./data:/data:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U sql_ex -d sql_ex"]
       interval: 5s
