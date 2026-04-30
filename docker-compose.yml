@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: sql-ex-postgres
+    environment:
+      POSTGRES_DB: sql_ex
+      POSTGRES_USER: sql_ex
+      POSTGRES_PASSWORD: sql_ex
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./ships/load_data.sql:/docker-entrypoint-initdb.d/10-load-ships.sql:ro
+      - ./ships:/data/ships:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sql_ex -d sql_ex"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  postgres-data:
